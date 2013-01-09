@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>获取图片imgdata</title>
+    <style>
+        html,body{
+            margin:0px;
+            padding:0px;
+        }
+        textarea, input[type="text"]{
+            border:1px solid #aaa;
+            outline:none;
+        }
+        textarea:focus, input[type="text"]:focus{
+            border-color:#0074cc;
+        }
+        #DropZone{
+            border:4px dotted #0074cc;  
+            border-radius: 10px; 
+            margin:10px;
+            min-height:300px;
+        }
+        #DropZone img{
+            margin:10px auto;
+            display:block;
+        }
+        #DataZone{
+            margin:10px;
+            height:300px;
+        }
+        #DataZone textarea{
+            width:100%;
+            height:100%;
+            padding:0px;
+        }
+    </style>
+</head>
+<body>
+    <div id="DropZone"></div>
+    <div id="DataZone">
+        <textarea></textarea>
+    </div>
+    <script>
+        var dropz = document.getElementById('DropZone'),
+            dataz = document.getElementById('DataZone').getElementsByTagName('textarea')[0];
+        dropz.ondrop = function (e) {
+            var file = e.dataTransfer.files[0],
+            freader = new FileReader();
+            freader.onload = function (event) { 
+                var imgData = event.target.result;
+                dropz.innerHTML = '<img src="' + imgData + '"/>';
+                dataz.value = imgData;
+                dataz.select();
+            };
+            freader.readAsDataURL(file); 
+            return false;
+        };
+    </script>
+</body>
+</html>
